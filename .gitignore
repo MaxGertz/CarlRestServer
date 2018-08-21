@@ -1,0 +1,4 @@
+# ignore all logs
+*.log
+# npm modules
+node_modules/
