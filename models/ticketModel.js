@@ -6,7 +6,7 @@ const ticketModel = new Schema({
     userId: String,
     carparkId: String,
     licensePlate: String,
-		contractAddress: String,
+		contractAddress: {type: String, unique: true}
     startTime: Date,
     endTime: Date,
     finished: Boolean
