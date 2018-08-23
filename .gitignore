@@ -2,3 +2,5 @@
 *.log
 # npm modules
 node_modules/
+
+config.js
