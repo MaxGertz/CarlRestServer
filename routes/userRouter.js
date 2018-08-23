@@ -18,23 +18,6 @@ userRouter.use('/findUser', (req, res, next) => {
 	next();
 });
 
-//TODO create all UserRoutes
-
-userRouter.route('/authUser/:username')
-	.get((req, res) => {
-		console.log(req.params.username);
-		User.find({ name: req.params.username }, (err, user) => {
-			if (err)
-				res.status(404).send(err);
-			else {
-				console.log(user);
-
-				// TODO: password check and response to client
-				res.status(200).send(user);
-			}
-		});
-	});
-
 userRouter.route('/findUser/:uId')
 	.get((req, res) => {
 		User.find({ _id: req.params.uId }, (err, user) => {
@@ -43,26 +26,6 @@ userRouter.route('/findUser/:uId')
 			else {
 				console.log(user);
 				res.status(200).send(user);
-			}
-		});
-	});
-
-userRouter.route('/addUser')
-	.post((req, res) => {
-		console.log(req.body.licensePlate);
-		console.log('Body:' + req.body);
-		let newUser = new User({
-			_id: new ObjectId,
-			name: req.body.name,
-			password: req.body.password,
-			licensePlate: req.body.licensePlate
-		});
-		newUser.save(function(err) {
-			if (err)
-				res.status(400).send(err);
-			else {
-				console.log('User: ' + newUser);
-				res.status(201).send(newUser);
 			}
 		});
 	});
