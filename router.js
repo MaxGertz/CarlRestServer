@@ -1,9 +1,8 @@
 const Authentication = require('./controllers/authentication');
 const passport = require('passport');
 require('./services/passport');
-// Test
-const User = require('./models/userModel');
 
+const User = require('./models/userModel');
 const userRouter = require('./routes/userRouter');
 const ticketRouter = require('./routes/ticketRouter');
 const carparkRouter = require('./routes/carparkRouter');

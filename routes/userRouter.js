@@ -3,6 +3,7 @@ const userRouter = express.Router();
 const User = require('../models/userModel');
 let ObjectId = require('mongoose').Types.ObjectId;
 
+// TODO: Add requireAuth to all routes! Are all routes needed?
 
 userRouter.use('/authUser', (req, res, next) => {
 	console.log('Auth User! Time: ' + Date.now());
@@ -30,7 +31,7 @@ userRouter.route('/findUser/:uId')
 		});
 	});
 
-//TODO find your by licensePlate and send user back to client, check user with multiple licensePlates. Still working?
+// TODO find your by licensePlate and send user back to client, check user with multiple licensePlates. Still working?
 userRouter.route('/userByPlate/:pID')
 	.get((req, res) => {
 		User.find({ licensePlate: req.params.pID }, (err, user) => {

@@ -8,19 +8,15 @@ const { secret } = require('../config');
 
 // setting local strategy:
 const localOptions = { usernameField: 'username' };
-const localLogin = new LocalStrategy(localOptions, function (username, password, done) {
+const localLogin = new LocalStrategy(localOptions, function(username, password, done) {
 	User.findOne({ name: username }, (err, user) => {
 		if (err) {
 			return done(err);
 		}
 
-		console.log('Start localLogin: ' + user);
-
 		if (!user) {
 			return done(null, false);
 		}
-
-		console.log('User password:', user.password);
 
 		user.comparePasswords(password, user.password, (err, isMatch) => {
 			if (err) {
@@ -28,16 +24,12 @@ const localLogin = new LocalStrategy(localOptions, function (username, password,
 			}
 
 			if (!isMatch) {
-				console.log('Match false');
 				return done(null, false);
 			}
-
-			console.log('Match true');
 			return done(null, user);
 		});
 	});
 });
-
 
 // setting the jwt strategy:
 const jwtOptions = {

@@ -2,7 +2,11 @@ const express = require('express');
 const ticketRouter = express.Router();
 const Ticket = require('../models/ticketModel');
 const mongoose = require('mongoose');
+const passport = require('passport');
+require('../services/passport');
 let ObjectId = require('mongoose').Types.ObjectId;
+
+const requireAuth = passport.authenticate('jwt', { session: false });
 
 ticketRouter.use('/addTicket', (req, res, next) => {
 	console.log('Adding new ticket! Time: ' + Date.now());
@@ -24,6 +28,7 @@ ticketRouter.use('/openTickets', (req, res, next) => {
 	next();
 })
 
+// TODO: Add requireAuth!
 ticketRouter.route('/addNewTicket')
 	.post((req, res) => {
 		let newTicket = new Ticket({
@@ -44,22 +49,10 @@ ticketRouter.route('/addNewTicket')
 				res.status(201).send(newTicket)
 			}
 		});
-
 	});
-// TODO: Really needed????
 
-ticketRouter.route('/getAllTickets')
-	.get((req, res) => {
-		Ticket.find({}, (err, ticket) => {
-			if (err)
-				res.status(500).send(err);
-			else {
-				console.log(ticket);
-				res.status(200).send(ticket);
-			}
-		});
-	});
 // IDEA: search by contractAddress -> Address is unique!
+// TODO: Add requireAuth!
 ticketRouter.route('/closeTicket')
 	.put((req, res) => {
 		Ticket.findOne({ _id: req.body._id }, (err, ticket) => {
@@ -76,16 +69,16 @@ ticketRouter.route('/closeTicket')
 		})
 	});
 
-ticketRouter.route('/openTickets/:userId')
-	.get((req, res) => {
-		Ticket.find({ userId: req.params.userId, finished: false }, (err, ticket) => {
-			if (err)
-				res.status(204).send(null);
-			else {
-				console.log(ticket);
-				res.status(200).send(ticket);
-			}
-		});
+// Return all open tickets for user(_id) -> used in overview!
+ticketRouter.get('/openTickets', requireAuth, function(req, res) {
+	Ticket.find({ userId: req.user._id, finished: false }, (err, ticket) => {
+		if (err)
+			res.status(204).send(null);
+		else {
+			console.log(ticket);
+			res.status(200).send(ticket);
+		}
 	});
+});
 
 module.exports = ticketRouter;
