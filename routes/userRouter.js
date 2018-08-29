@@ -25,7 +25,6 @@ userRouter.route('/findUser/:uId')
 			if (err)
 				res.status(404).send(err);
 			else {
-				console.log(user);
 				res.status(200).send(user);
 			}
 		});
@@ -35,7 +34,6 @@ userRouter.route('/findUser/:uId')
 userRouter.route('/userByPlate/:pID')
 	.get((req, res) => {
 		User.find({ licensePlate: req.params.pID }, (err, user) => {
-			console.log(req.params.pID);
 			if (err)
 				res.status(404).send(err)
 			else {

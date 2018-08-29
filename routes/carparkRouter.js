@@ -2,13 +2,11 @@ const express = require('express');
 const carparkRouter = express.Router();
 const Carpark = require('../models/carparkModel');
 const mongoose = require('mongoose');
+const passport = require('passport');
+require('../services/passport');
 let ObjectId = require('mongoose').Types.ObjectId;
 
-
-carparkRouter.use('/getAllCarparks', (req, res, next) => {
-	console.log(Date.now() + ': Returning all carparks!');
-	next();
-});
+const requireAuth = passport.authenticate('jwt', { session: false });
 
 carparkRouter.use('addCarpark', (req, res, next) => {
 	console.log(Date.now() + ': Adding new carpark!');
@@ -45,5 +43,15 @@ carparkRouter.route('/addCarpark')
 			}
 		});
 	});
+
+carparkRouter.get('/:carparkId', (req, res) => {
+	Carpark.findOne({ _id: req.params.carparkId }, (err, carpark) => {
+		if (err) {
+			res.status(204).send(null);
+		} else {
+			res.status(200).send(carpark);
+		}
+	});
+});
 
 module.exports = carparkRouter;

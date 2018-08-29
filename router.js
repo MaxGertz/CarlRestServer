@@ -24,7 +24,6 @@ module.exports = function(app) {
 			if (err) {
 				return res.status(422).send(err);
 			} else {
-				console.log(user);
 				res.send(user);
 			}
 

@@ -8,25 +8,6 @@ let ObjectId = require('mongoose').Types.ObjectId;
 
 const requireAuth = passport.authenticate('jwt', { session: false });
 
-ticketRouter.use('/addTicket', (req, res, next) => {
-	console.log('Adding new ticket! Time: ' + Date.now());
-	next()
-});
-
-ticketRouter.use('/getAllTickets', (req, res, next) => {
-	console.log('Returning all tickets! Time ' + Date.now());
-	next()
-});
-
-ticketRouter.use('/closeTicket', (req, res, next) => {
-	console.log('Closing ticket! Time ' + Date.now());
-	next()
-});
-
-ticketRouter.use('/openTickets', (req, res, next) => {
-	console.log('Sending open tickets! Time ' + Date.now());
-	next();
-})
 
 // TODO: Add requireAuth!
 ticketRouter.route('/addNewTicket')
@@ -45,7 +26,6 @@ ticketRouter.route('/addNewTicket')
 			if (err)
 				res.status(400).send(err);
 			else {
-				console.log(newTicket);
 				res.status(201).send(newTicket)
 			}
 		});
@@ -59,23 +39,20 @@ ticketRouter.route('/closeTicket')
 			if (err || ticket == null || ticket.finished == true)
 				res.status(404).send(err);
 			else {
-				console.log('Old ticket: ' + ticket);
 				ticket.endTime = Date.now();
 				ticket.finished = true;
 				ticket.save();
-				console.log('Updated: ' + ticket);
 				res.status(200).send(ticket)
 			}
 		})
 	});
 
 // Return all open tickets for user(_id) -> used in overview!
-ticketRouter.get('/openTickets', requireAuth, function(req, res) {
+ticketRouter.get('/openTickets', requireAuth, (req, res) => {
 	Ticket.find({ userId: req.user._id, finished: false }, (err, ticket) => {
-		if (err)
+		if (err) {
 			res.status(204).send(null);
-		else {
-			console.log(ticket);
+		} else {
 			res.status(200).send(ticket);
 		}
 	});
