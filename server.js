@@ -11,7 +11,7 @@ const router = require('./router');
 const app = express();
 
 //Setting up port & MongoDB-Connection
-mongoose.connect(db);
+mongoose.connect(db,{useNewUrlParser: true});
 
 
 app.use(bodyParser.json({type: '*/*'}));

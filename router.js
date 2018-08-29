@@ -12,7 +12,6 @@ const requireSignIn = passport.authenticate('local', { session: false });
 
 module.exports = function(app) {
 
-	//app.use('/api/user', userRouter);
 	app.use('/api/ticket', ticketRouter);
 	app.use('/api/carpark', carparkRouter);
 
@@ -21,7 +20,6 @@ module.exports = function(app) {
 	});
 
 	app.get('/user', requireAuth, function(req, res) {
-		console.log(req);
 		User.findOne({ name: req.user.name }, (err, user) => {
 			if (err) {
 				return res.status(422).send(err);
