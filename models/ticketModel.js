@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+// Schema used in the db for the carparks
+// starttime is the blocktime from the smartContract
 const ticketModel = new Schema({
 	_id: { type: mongoose.Schema.ObjectId, ref: 'Ticket' },
 	userId: String,

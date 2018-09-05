@@ -2,13 +2,16 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt-nodejs');
 const { Schema } = mongoose;
 
+// Schema for the user collection
+// licensePlate is an array to enable the use of multiple license plates for
+// a user
 const userModel = new Schema({
-	//id: { type: mongoose.Schema.ObjectId, ref: 'User' },
 	name: { type: String, unique: true },
 	password: String,
 	licensePlate: [String],
 });
 
+// hashing the password with bcrypt before adding & saving a new user in the db
 userModel.pre('save', function(next) {
 
 	const user = this;
@@ -22,7 +25,6 @@ userModel.pre('save', function(next) {
 			if (err) {
 				return next(err);
 			}
-			console.log(hash);
 			user.password = hash
 
 			next();
@@ -30,8 +32,9 @@ userModel.pre('save', function(next) {
 	});
 });
 
+// method to compare password during the login progress
+// compares the hash of the password and the by the user entered password
 userModel.methods.comparePasswords = (password, corpassword, callback) => {
-	console.log('Called compare!: ' + password, corpassword);
 	bcrypt.compare(password, corpassword, (err, isMatch) => {
 		if (err) {
 			return callback(err);

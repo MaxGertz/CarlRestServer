@@ -3,7 +3,7 @@ const User = require('../models/userModel');
 const { secret } = require('../config');
 let ObjectId = require('mongoose').Types.ObjectId;
 
-
+// creating a new jwt-token for a logged-in user
 function tokenForUser(user) {
 	const timestamp = new Date().getTime();
 
@@ -14,6 +14,7 @@ exports.signin = (req, res) => {
 	res.send({ token: tokenForUser(req.user) });
 };
 
+// register a new user in the db and checking if user already exists
 exports.signup = (req, res, next) => {
 	const username = req.body.username;
 	const password = req.body.password;

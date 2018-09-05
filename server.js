@@ -24,6 +24,6 @@ router(app);
 //Running the server
 app.listen(port, () => {
 	console.log(`http://localhost:${port}`);
-	console.log('CARL_Server started');
-	console.log('Now listening')
+	console.log('CarlServer started');
+	console.log('Now listening...')
 });
