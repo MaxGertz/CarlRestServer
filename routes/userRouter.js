@@ -3,27 +3,13 @@ const userRouter = express.Router();
 const User = require('../models/userModel');
 let ObjectId = require('mongoose').Types.ObjectId;
 
-// TODO: Add requireAuth to all routes! Are all routes needed?
 
-userRouter.use('/authUser', (req, res, next) => {
-	console.log('Auth User! Time: ' + Date.now());
-	next()
-});
-userRouter.use('/addUser', (req, res, next) => {
-	console.log('Add User! Time: ' + Date.now());
-	next()
-});
 
-userRouter.use('/findUser', (req, res, next) => {
-	console.log('Find User! Time: ' + Date.now());
-	next();
-});
-
-userRouter.route('/findUser/:uId')
+userRouter.route('/find/:uId')
 	.get((req, res) => {
-		User.find({ _id: req.params.uId }, (err, user) => {
+		User.findOne({ _id: req.params.uId }, (err, user) => {
 			if (err)
-				res.status(404).send(err);
+				res.status(404).send(null);
 			else {
 				res.status(200).send(user);
 			}
@@ -35,7 +21,7 @@ userRouter.route('/userByPlate/:pID')
 	.get((req, res) => {
 		User.find({ licensePlate: req.params.pID }, (err, user) => {
 			if (err)
-				res.status(404).send(err)
+				res.status(204).send(err)
 			else {
 				res.status(200).send(user);
 			}

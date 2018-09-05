@@ -12,7 +12,8 @@ const carparkModel = new Schema({
 		city: String,
 		country: String,
 	},
-	parkingSpaces: Number
+	parkingSpaces: Number,
+	costHour: String
 }, { collection: 'Carparks' });
 
 module.exports = mongoose.model('Carpark', carparkModel);

@@ -32,7 +32,8 @@ carparkRouter.route('/addCarpark')
 			name: req.body.name,
 			wallet: req.body.wallet,
 			address: req.body.address,
-			parkingSpaces: req.body.parkingSpaces
+			parkingSpaces: req.body.parkingSpaces,
+			costHour: req.body.costHour
 		});
 		newCarpark.save((err) => {
 			if (err)

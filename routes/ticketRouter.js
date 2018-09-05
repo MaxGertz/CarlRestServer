@@ -47,6 +47,16 @@ ticketRouter.route('/closeTicket')
 		})
 	});
 
+ticketRouter.get('/byCA/:address', (req, res) => {
+	Ticket.findOne({ contractAddress: req.params.address }, (err, ticket) => {
+		if (err) {
+			res.status(204).send(err.message);
+		} else {
+			res.status(200).send(ticket);
+		}
+	});
+});
+
 // Return all open tickets for user(_id) -> used in overview!
 ticketRouter.get('/openTickets', requireAuth, (req, res) => {
 	Ticket.find({ userId: req.user._id, finished: false }, (err, ticket) => {

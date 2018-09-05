@@ -12,6 +12,7 @@ const requireSignIn = passport.authenticate('local', { session: false });
 
 module.exports = function(app) {
 
+	app.use('/api/user/', userRouter);
 	app.use('/api/ticket', ticketRouter);
 	app.use('/api/carpark', carparkRouter);
 
@@ -26,12 +27,10 @@ module.exports = function(app) {
 			} else {
 				res.send(user);
 			}
-
 		})
 	});
 
 	app.post('/signin', requireSignIn, Authentication.signin);
-
 	app.post('/signup', Authentication.signup);
 
 };

@@ -9,8 +9,7 @@ const userModel = new Schema({
 	licensePlate: [String],
 });
 
-
-userModel.pre('save', function (next) {
+userModel.pre('save', function(next) {
 
 	const user = this;
 
@@ -32,7 +31,7 @@ userModel.pre('save', function (next) {
 });
 
 userModel.methods.comparePasswords = (password, corpassword, callback) => {
-	console.log('Called compare!: ' + password,	 corpassword);
+	console.log('Called compare!: ' + password, corpassword);
 	bcrypt.compare(password, corpassword, (err, isMatch) => {
 		if (err) {
 			return callback(err);
@@ -41,7 +40,5 @@ userModel.methods.comparePasswords = (password, corpassword, callback) => {
 		callback(null, isMatch);
 	});
 };
-
-
 
 module.exports = mongoose.model('User', userModel);

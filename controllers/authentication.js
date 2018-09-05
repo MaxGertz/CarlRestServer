@@ -32,7 +32,6 @@ exports.signup = (req, res, next) => {
 		}
 
 		const user = new User({
-			//id: new ObjectId,
 			name: username,
 			password: password
 		});
