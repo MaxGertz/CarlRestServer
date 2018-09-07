@@ -2,7 +2,6 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 // Schema used in the db for the carparks
-// TODO: other way to store the costHour -> float????
 const carparkModel = new Schema({
 	_id: { type: mongoose.Schema.ObjectId, ref: 'Carpark' },
 	name: String,
@@ -15,7 +14,7 @@ const carparkModel = new Schema({
 		country: String,
 	},
 	parkingSpaces: Number,
-	costHour: String
+	costHour: Number
 }, { collection: 'Carparks' });
 
 module.exports = mongoose.model('Carpark', carparkModel);
