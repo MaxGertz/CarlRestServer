@@ -10,7 +10,7 @@ const ticketModel = new Schema({
 	licensePlate: String,
 	contractAddress: { type: String, unique: true },
 	startTime: Number,
-	endTime: Date,
+	endTime: Number,
 	finished: Boolean
 }, { collection: 'Tickets' });
 

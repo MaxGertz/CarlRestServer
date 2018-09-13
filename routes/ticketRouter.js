@@ -39,7 +39,7 @@ ticketRouter.route('/closeTicket')
 			if (err || ticket == null || ticket.finished == true)
 				res.status(404).send(err);
 			else {
-				ticket.endTime = Date.now();
+				ticket.endTime = req.body.endTime;
 				ticket.finished = true;
 				ticket.save();
 				res.status(200).send(ticket)
