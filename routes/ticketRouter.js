@@ -4,7 +4,6 @@ const Ticket = require('../models/ticketModel');
 const mongoose = require('mongoose');
 const passport = require('passport');
 require('../services/passport');
-let ObjectId = require('mongoose').Types.ObjectId;
 
 const requireAuth = passport.authenticate('jwt', { session: false });
 
@@ -12,8 +11,8 @@ const requireAuth = passport.authenticate('jwt', { session: false });
 // TODO: Add requireAuth!
 ticketRouter.route('/addNewTicket')
 	.post((req, res) => {
+		console.log(req.body);
 		let newTicket = new Ticket({
-			_id: new ObjectId,
 			userId: req.body.userId,
 			carparkId: req.body.carparkId,
 			contractAddress: req.body.contractAddress,
@@ -23,16 +22,14 @@ ticketRouter.route('/addNewTicket')
 			finished: false
 		});
 		newTicket.save((err) => {
-			if (err)
+			if (err) {
 				res.status(400).send(err);
-			else {
+			} else {
 				res.status(201).send(newTicket)
 			}
 		});
 	});
 
-// IDEA: search by contractAddress -> Address is unique!
-// TODO: Add requireAuth!
 ticketRouter.route('/closeTicket')
 	.put((req, res) => {
 		Ticket.findOne({ _id: req.body._id }, (err, ticket) => {

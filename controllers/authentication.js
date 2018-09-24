@@ -14,7 +14,7 @@ exports.signin = (req, res) => {
 	res.send({ token: tokenForUser(req.user) });
 };
 
-// register a new user in the db and checking if user already exists
+// register a new user in the db
 exports.signup = (req, res, next) => {
 	const username = req.body.username;
 	const password = req.body.password;
@@ -23,6 +23,7 @@ exports.signup = (req, res, next) => {
 		return res.status(422).send({ error: 'Email and password must be provided' });
 	}
 
+	// checking if user already exists in user collection
 	User.findOne({ name: username }, (err, existingUser) => {
 		if (err) {
 			return next(err);
@@ -31,7 +32,7 @@ exports.signup = (req, res, next) => {
 		if (existingUser) {
 			return res.status(422).send({ error: 'Username is already used!' });
 		}
-
+		
 		const user = new User({
 			name: username,
 			password: password

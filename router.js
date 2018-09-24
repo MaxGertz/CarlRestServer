@@ -32,7 +32,7 @@ module.exports = function(app) {
 		})
 	});
 
-	// Signin & -up routes using the authentication-methods
+	// Signin & -up routes using the authentication methods
 	app.post('/signin', requireSignIn, Authentication.signin);
 	app.post('/signup', Authentication.signup);
 

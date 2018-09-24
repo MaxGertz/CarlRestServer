@@ -11,10 +11,10 @@ const app = express();
 //Setting up port & MongoDB-Connection
 mongoose.connect(db, { useNewUrlParser: true });
 
-app.use(bodyParser.json({ type: '*/*' }));
+app.use(bodyParser.json({ type: '*/*' })); // middleware to parse incoming request bodies
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cors());
-app.use(morgan('combined'));
+app.use(cors()); // middleware to enable cross-origin resource sharing
+app.use(morgan('combined')); // logger middleware
 
 app.enable('trust proxy');
 
