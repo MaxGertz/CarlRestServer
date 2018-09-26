@@ -9,12 +9,15 @@ const router = require('./router');
 const app = express();
 
 //Setting up port & MongoDB-Connection
-mongoose.connect(db, { useNewUrlParser: true });
+mongoose.connect(
+  db,
+  { useNewUrlParser: true }
+);
 
 app.use(bodyParser.json({ type: '*/*' })); // middleware to parse incoming request bodies
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors()); // middleware to enable cross-origin resource sharing
-app.use(morgan('combined')); // logger middleware
+app.use(morgan('short')); // logger middleware
 
 app.enable('trust proxy');
 
@@ -23,7 +26,7 @@ router(app);
 
 //Running the server
 app.listen(port, () => {
-	console.log(`http://localhost:${port}`);
-	console.log('CarlServer started');
-	console.log('Now listening...')
+  console.log(`http://localhost:${port}`);
+  console.log('CarlServer started');
+  console.log('Now listening...');
 });
