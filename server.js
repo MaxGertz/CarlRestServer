@@ -17,7 +17,7 @@ mongoose.connect(
 app.use(bodyParser.json({ type: '*/*' })); // middleware to parse incoming request bodies
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors()); // middleware to enable cross-origin resource sharing
-app.use(morgan('short')); // logger middleware
+app.use(morgan('common')); // logger middleware
 
 app.enable('trust proxy');
 
