@@ -8,16 +8,10 @@ let ObjectId = require('mongoose').Types.ObjectId;
 
 const requireAuth = passport.authenticate('jwt', { session: false });
 
-carparkRouter.use('addCarpark', (req, res, next) => {
-  console.log(Date.now() + ': Adding new carpark!');
-  next();
-});
-
 carparkRouter.route('/getAllCarparks').get((req, res) => {
   Carpark.find({}, (err, carparks) => {
     if (err) res.status(500).send(err);
     else {
-      console.log(carparks);
       res.status(200).send(carparks);
     }
   });
@@ -35,7 +29,6 @@ carparkRouter.route('/addCarpark').post((req, res) => {
   newCarpark.save(err => {
     if (err) res.status(404).send(err);
     else {
-      console.log(newCarpark);
       res.status(201).send(newCarpark);
     }
   });
