@@ -9,7 +9,6 @@ const requireAuth = passport.authenticate('jwt', { session: false });
 
 // TODO: Add requireAuth!
 ticketRouter.route('/addNewTicket').post((req, res) => {
-  console.log(req.body);
   let newTicket = new Ticket({
     userId: req.body.userId,
     carparkId: req.body.carparkId,
